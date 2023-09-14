@@ -1,6 +1,7 @@
 package com.example.github_user_app.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,5 +28,13 @@ class MainActivity : AppCompatActivity() {
             adapter = GithubUserListAdapter(githubUsers)
             binding.rvUserGithubList.adapter = adapter
         }
+
+        githubUserViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

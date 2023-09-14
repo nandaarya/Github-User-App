@@ -17,10 +17,13 @@ class GithubUserViewModel : ViewModel() {
     private val _githubUserList = MutableLiveData<List<ItemsItem>>()
     val githubUserList: LiveData<List<ItemsItem>> = _githubUserList
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     companion object {
         //        private const val TAG = "MainViewModel"
 //        private const val RESTAURANT_ID = "uewq1zg2zlskfw1e867"
-        private const val USERNAME = "sidiqpermana"
+        private const val USERNAME = "nanda"
     }
 
     init {
@@ -28,13 +31,14 @@ class GithubUserViewModel : ViewModel() {
     }
 
     private fun findGithubUser() {
+        _isLoading.value = true
         val client = ApiConfig.getApiService().getGithubUser(USERNAME)
         client.enqueue(object : Callback<GithubUserResponse> {
             override fun onResponse(
                 call: Call<GithubUserResponse>,
                 response: Response<GithubUserResponse>
             ) {
-//                _isLoading.value = false
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     _githubUserList.value = response.body()?.items
                 } else {
@@ -43,7 +47,7 @@ class GithubUserViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<GithubUserResponse>, t: Throwable) {
-//                _isLoading.value = false
+                _isLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
             }
         })
