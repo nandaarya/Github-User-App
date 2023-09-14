@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Github-User-App</string>
+    <string name="searchbar_hint">Masukkan username</string>
+</resources>
