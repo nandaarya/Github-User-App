@@ -20,19 +20,16 @@ class GithubUserViewModel : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    companion object {
-        //        private const val TAG = "MainViewModel"
-//        private const val RESTAURANT_ID = "uewq1zg2zlskfw1e867"
-        private const val USERNAME = "nanda"
+    private val _username = MutableLiveData<String>()
+    val username: LiveData<String> = _username
+
+    fun setUsername(username: String) {
+        _username.value = username
     }
 
-    init {
-        findGithubUser()
-    }
-
-    private fun findGithubUser() {
+    fun findGithubUser(username: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getGithubUser(USERNAME)
+        val client = ApiConfig.getApiService().getGithubUser(username)
         client.enqueue(object : Callback<GithubUserResponse> {
             override fun onResponse(
                 call: Call<GithubUserResponse>,

@@ -2,6 +2,7 @@ package com.example.github_user_app.ui
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,9 +25,30 @@ class MainActivity : AppCompatActivity() {
         adapter = GithubUserListAdapter(emptyList())
         binding.rvUserGithubList.adapter = adapter
 
+        with(binding) {
+            searchView.setupWithSearchBar(searchBar)
+            searchView
+                .editText
+                .setOnEditorActionListener { textView, actionId, event ->
+                    searchBar.text = searchView.text
+                    searchView.hide()
+                    githubUserViewModel.setUsername(searchBar.text.toString())
+                    Toast.makeText(this@MainActivity, searchView.text, Toast.LENGTH_SHORT).show()
+                    false
+                }
+        }
+
+        githubUserViewModel.username.observe(this) {username ->
+            if (username.isNotBlank()){
+                githubUserViewModel.findGithubUser(username)
+            }
+        }
+
         githubUserViewModel.githubUserList.observe(this) { githubUsers ->
-            adapter = GithubUserListAdapter(githubUsers)
-            binding.rvUserGithubList.adapter = adapter
+            if (githubUsers != null) {
+                adapter = GithubUserListAdapter(githubUsers)
+                binding.rvUserGithubList.adapter = adapter
+            }
         }
 
         githubUserViewModel.isLoading.observe(this) {
