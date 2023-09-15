@@ -44,10 +44,10 @@ class DetailUserActivity : AppCompatActivity() {
     }
 
     private fun setViewPager() {
-        binding.viewPager.adapter = ViewPagerAdapter(this)
+        binding.viewPager.adapter = ViewPagerAdapter(this, username)
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = ViewPagerAdapter(this).getPageTitle(position)
+            tab.text = ViewPagerAdapter(this, username).getPageTitle(position)
         }.attach()
     }
 }

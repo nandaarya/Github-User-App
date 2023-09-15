@@ -6,7 +6,7 @@
     tools:context=".ui.FollowingFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_user_list"
+        android:id="@+id/rv_following_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/item_layout"/>
