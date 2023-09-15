@@ -5,6 +5,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.github_user_app.databinding.ActivityDetailUserBinding
+import com.example.github_user_app.ui.ViewPagerAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailUserActivity : AppCompatActivity() {
 
@@ -18,6 +20,8 @@ class DetailUserActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setUserData()
+
+        setViewPager()
     }
 
     private fun setUserData() {
@@ -37,5 +41,13 @@ class DetailUserActivity : AppCompatActivity() {
             binding.tvTotalFollowers.text = userDetail.followers.toString()
             binding.tvTotalFollowing.text = userDetail.following.toString()
         }
+    }
+
+    private fun setViewPager() {
+        binding.viewPager.adapter = ViewPagerAdapter(this)
+
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = ViewPagerAdapter(this).getPageTitle(position)
+        }.attach()
     }
 }
