@@ -1,4 +1,4 @@
-package com.example.github_user_app.ui
+package com.example.github_user_app.ui.detail
 
 import android.os.Bundle
 import androidx.activity.viewModels

@@ -1,4 +1,4 @@
-package com.example.github_user_app.ui
+package com.example.github_user_app.ui.home
 
 import android.content.ContentValues.TAG
 import android.util.Log

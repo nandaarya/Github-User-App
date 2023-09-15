@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.github_user_app.data.response.ItemsItem
 import com.example.github_user_app.databinding.ItemLayoutBinding
+import com.example.github_user_app.ui.detail.DetailUserActivity
 
 class GithubUserListAdapter(private val githubUserList: List<ItemsItem>) :
     RecyclerView.Adapter<GithubUserListAdapter.GithubUserViewHolder>() {

@@ -7,7 +7,7 @@
     android:padding="24dp"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".ui.DetailUserActivity">
+    tools:context=".ui.detail.DetailUserActivity">
 
     <ImageView
         android:id="@+id/iv_profile"
