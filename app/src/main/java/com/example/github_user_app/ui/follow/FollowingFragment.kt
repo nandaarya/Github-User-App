@@ -1,24 +1,24 @@
 package com.example.github_user_app.ui.follow
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.github_user_app.databinding.FragmentFollowerBinding
+import com.example.github_user_app.databinding.FragmentFollowingBinding
 
-class FollowerFragment(private val username: String) : Fragment() {
+class FollowingFragment(private val username: String) : Fragment() {
 
-    private lateinit var binding: FragmentFollowerBinding
+    private lateinit var binding: FragmentFollowingBinding
     private lateinit var adapter: FollowListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentFollowerBinding.inflate(inflater, container, false)
+        binding = FragmentFollowingBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -27,23 +27,23 @@ class FollowerFragment(private val username: String) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val layoutManager = LinearLayoutManager(requireContext())
-        binding.rvFollowerList.layoutManager = layoutManager
+        binding.rvFollowingList.layoutManager = layoutManager
 
         adapter = FollowListAdapter(emptyList())
-        binding.rvFollowerList.adapter = adapter
+        binding.rvFollowingList.adapter = adapter
 
         if (isAdded && !isDetached) {
-            val userFollowerViewModel = ViewModelProvider(
+            val userFollowingViewModel = ViewModelProvider(
                 this,
                 ViewModelProvider.NewInstanceFactory()
-            )[UserFollowerViewModel::class.java]
+            )[UserFollowingViewModel::class.java]
 
-            userFollowerViewModel.getFollowerList(username)
+            userFollowingViewModel.getFollowingList(username)
 
-            userFollowerViewModel.followerList.observe(viewLifecycleOwner) { followerList ->
-                if (followerList != null) {
-                    adapter = FollowListAdapter(followerList)
-                    binding.rvFollowerList.adapter = adapter
+            userFollowingViewModel.followingList.observe(viewLifecycleOwner) { followingList ->
+                if (followingList != null) {
+                    adapter = FollowListAdapter(followingList)
+                    binding.rvFollowingList.adapter = adapter
                 }
             }
         }

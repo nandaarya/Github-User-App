@@ -10,10 +10,10 @@ import com.example.github_user_app.data.response.FollowUserResponseItem
 import com.example.github_user_app.databinding.ItemLayoutBinding
 import com.example.github_user_app.ui.detail.DetailUserActivity
 
-class FollowerListAdapter (private val followerUserList: List<FollowUserResponseItem>) :
-    RecyclerView.Adapter<FollowerListAdapter.FollowerListViewHolder>() {
+class FollowListAdapter (private val followUserList: List<FollowUserResponseItem>) :
+    RecyclerView.Adapter<FollowListAdapter.FollowListViewHolder>() {
 
-    inner class FollowerListViewHolder(private val binding: ItemLayoutBinding) :
+    inner class FollowListViewHolder(private val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(followerData: FollowUserResponseItem) {
             binding.tvUsername.text = followerData.login
@@ -34,20 +34,20 @@ class FollowerListAdapter (private val followerUserList: List<FollowUserResponse
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerListViewHolder {
-        return FollowerListViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowListViewHolder {
+        return FollowListViewHolder(
             ItemLayoutBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
     }
 
-    override fun onBindViewHolder(holder: FollowerListViewHolder, position: Int) {
-        val follower = followerUserList[position]
+    override fun onBindViewHolder(holder: FollowListViewHolder, position: Int) {
+        val follower = followUserList[position]
         holder.bind(follower)
     }
 
     override fun getItemCount(): Int {
-        return followerUserList.size
+        return followUserList.size
     }
 }
