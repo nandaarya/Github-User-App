@@ -1,7 +1,7 @@
 package com.example.github_user_app.data.retrofit
 
 import com.example.github_user_app.data.response.ItemsItem
-import com.example.github_user_app.data.response.GithubUserDetailResponse
+import com.example.github_user_app.data.response.DetailUserResponse
 import com.example.github_user_app.data.response.GithubUserResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -18,7 +18,7 @@ interface ApiService {
     @GET("users/{username}")
     fun getGithubUserDetail(
         @Path("username") username: String
-    ): Call<GithubUserDetailResponse>
+    ): Call<DetailUserResponse>
 
     @GET("users/{username}/followers")
     fun getFollowerList(

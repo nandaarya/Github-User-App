@@ -23,11 +23,12 @@ class GithubUserViewModel : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _username = MutableLiveData<String>()
-    val username: LiveData<String> = _username
-
     fun setUsername(username: String) {
-        _username.value = username
+        findGithubUser(username)
+    }
+
+    init {
+        findGithubUser(USERNAME)
     }
 
     fun findGithubUser(username: String) {
@@ -53,5 +54,9 @@ class GithubUserViewModel : ViewModel() {
                 }
             })
         }
+    }
+
+    companion object{
+        private const val USERNAME = "nandaarya"
     }
 }

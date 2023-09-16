@@ -21,12 +21,6 @@ class MainActivity : AppCompatActivity() {
 
         setRecyclerViewData()
 
-        githubUserViewModel.username.observe(this) {username ->
-            if (username.isNotBlank()){
-                githubUserViewModel.findGithubUser(username)
-            }
-        }
-
         githubUserViewModel.githubUserList.observe(this) { githubUsers ->
             if (githubUsers != null) {
                 adapter = GithubUserListAdapter(githubUsers)
@@ -43,14 +37,11 @@ class MainActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         binding.rvUserGithubList.layoutManager = layoutManager
 
-        adapter = GithubUserListAdapter(emptyList())
-        binding.rvUserGithubList.adapter = adapter
-
         with(binding) {
             searchView.setupWithSearchBar(searchBar)
             searchView
                 .editText
-                .setOnEditorActionListener { textView, actionId, event ->
+                .setOnEditorActionListener { _, _, _ ->
                     searchBar.text = searchView.text
                     searchView.hide()
                     githubUserViewModel.setUsername(searchBar.text.toString())
