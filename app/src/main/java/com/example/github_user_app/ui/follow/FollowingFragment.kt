@@ -32,9 +32,6 @@ class FollowingFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvFollowingList.layoutManager = layoutManager
 
-        adapter = GithubUserListAdapter(emptyList())
-        binding.rvFollowingList.adapter = adapter
-
         if (isAdded && !isDetached) {
             val userFollowingViewModel = ViewModelProvider(
                 this,
