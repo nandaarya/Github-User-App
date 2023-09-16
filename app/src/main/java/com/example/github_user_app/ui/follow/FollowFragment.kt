@@ -20,7 +20,7 @@ class FollowFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentFollowBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -41,6 +41,10 @@ class FollowFragment : Fragment() {
                 ViewModelProvider.NewInstanceFactory()
             )[UserFollowViewModel::class.java]
 
+            userFollowViewModel.isLoading.observe(viewLifecycleOwner) {
+                showLoading(it)
+            }
+
             userFollowViewModel.followList.observe(viewLifecycleOwner) { followList ->
                 if (followList != null) {
                     adapter = GithubUserListAdapter(followList)
@@ -54,6 +58,10 @@ class FollowFragment : Fragment() {
                 userFollowViewModel.getFollowList(username, "following")
             }
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {

@@ -46,7 +46,6 @@ class DetailUserActivity : AppCompatActivity() {
     }
 
     private fun setViewPager() {
-
         val adapter = SectionsPagerAdapter(this, username)
         binding.viewPager.adapter = adapter
 
