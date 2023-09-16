@@ -30,7 +30,6 @@ class UserFollowViewModel : ViewModel() {
             } else {
                 ApiConfig.getApiService().getFollowingList(username)
             }
-//            val client = ApiConfig.getApiService().getFollowList(username)
             client.enqueue(object : Callback<List<ItemsItem>> {
                 override fun onResponse(
                     call: Call<List<ItemsItem>>,

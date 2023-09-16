@@ -1,13 +1,13 @@
 package com.example.github_user_app.ui.detail
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.github_user_app.R
 import com.example.github_user_app.databinding.ActivityDetailUserBinding
-import com.example.github_user_app.ui.follow.*
+import com.example.github_user_app.ui.follow.SectionsPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailUserActivity : AppCompatActivity() {
@@ -28,6 +28,10 @@ class DetailUserActivity : AppCompatActivity() {
 
     private fun setUserData() {
         username = intent.getStringExtra("username")!!
+
+        githubUserDetailViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
 
         githubUserDetailViewModel.getGithubUserDetail(username)
 
@@ -50,13 +54,17 @@ class DetailUserActivity : AppCompatActivity() {
         binding.viewPager.adapter = adapter
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = TAB_TITLES[position].toString()
+            val tabText = this.getString(TAB_TITLES[position])
+            tab.text = tabText
         }.attach()
     }
 
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
     companion object {
-        @StringRes
-        private val TAB_TITLES = intArrayOf(
+        private val TAB_TITLES = listOf(
             R.string.tab_text_1,
             R.string.tab_text_2
         )

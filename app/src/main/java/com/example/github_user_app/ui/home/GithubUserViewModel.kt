@@ -31,7 +31,7 @@ class GithubUserViewModel : ViewModel() {
         findGithubUser(USERNAME)
     }
 
-    fun findGithubUser(username: String) {
+    private fun findGithubUser(username: String) {
         _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             val client = ApiConfig.getApiService().getGithubUser(username)
