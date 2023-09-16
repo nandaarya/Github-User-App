@@ -9,10 +9,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.github_user_app.databinding.FragmentFollowerBinding
 
-class FollowerFragment(private val username: String) : Fragment() {
+class FollowerFragment : Fragment() {
 
     private lateinit var binding: FragmentFollowerBinding
     private lateinit var adapter: FollowListAdapter
+    private lateinit var username: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -20,6 +21,7 @@ class FollowerFragment(private val username: String) : Fragment() {
     ): View {
         binding = FragmentFollowerBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
+        username = arguments?.getString("username", "")!!
         return binding.root
     }
 

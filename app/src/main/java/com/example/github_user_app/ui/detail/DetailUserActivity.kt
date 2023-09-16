@@ -5,7 +5,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.github_user_app.databinding.ActivityDetailUserBinding
-import com.example.github_user_app.ui.ViewPagerAdapter
+import com.example.github_user_app.ui.follow.ViewPagerAdapter
+import com.example.github_user_app.ui.follow.FollowerFragment
+import com.example.github_user_app.ui.follow.FollowingFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailUserActivity : AppCompatActivity() {
@@ -44,10 +46,27 @@ class DetailUserActivity : AppCompatActivity() {
     }
 
     private fun setViewPager() {
-        binding.viewPager.adapter = ViewPagerAdapter(this, username)
+        val followerBundle = Bundle()
+        followerBundle.putString("username", username)
+        followerBundle.putString("title", "Follower")
+
+        val followingBundle = Bundle()
+        followingBundle.putString("username", username)
+        followingBundle.putString("title", "Following")
+
+        val followerFragment = FollowerFragment()
+        followerFragment.arguments = followerBundle
+
+        val followingFragment = FollowingFragment()
+        followingFragment.arguments = followingBundle
+
+        val fragmentList = arrayListOf(followerFragment, followingFragment)
+
+        val adapter = ViewPagerAdapter(this, fragmentList)
+        binding.viewPager.adapter = adapter
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = ViewPagerAdapter(this, username).getPageTitle(position)
+            tab.text = adapter.getPageTitle(position)
         }.attach()
     }
 }
