@@ -8,11 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.github_user_app.databinding.FragmentFollowerBinding
+import com.example.github_user_app.ui.home.GithubUserListAdapter
 
 class FollowerFragment : Fragment() {
 
     private lateinit var binding: FragmentFollowerBinding
-    private lateinit var adapter: FollowListAdapter
+    private lateinit var adapter: GithubUserListAdapter
     private lateinit var username: String
 
     override fun onCreateView(
@@ -31,7 +32,7 @@ class FollowerFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvFollowerList.layoutManager = layoutManager
 
-        adapter = FollowListAdapter(emptyList())
+        adapter = GithubUserListAdapter(emptyList())
         binding.rvFollowerList.adapter = adapter
 
         if (isAdded && !isDetached) {
@@ -44,7 +45,7 @@ class FollowerFragment : Fragment() {
 
             userFollowerViewModel.followerList.observe(viewLifecycleOwner) { followerList ->
                 if (followerList != null) {
-                    adapter = FollowListAdapter(followerList)
+                    adapter = GithubUserListAdapter(followerList)
                     binding.rvFollowerList.adapter = adapter
                 }
             }

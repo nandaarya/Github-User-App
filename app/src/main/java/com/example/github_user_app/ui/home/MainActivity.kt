@@ -19,6 +19,27 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setRecyclerViewData()
+
+        githubUserViewModel.username.observe(this) {username ->
+            if (username.isNotBlank()){
+                githubUserViewModel.findGithubUser(username)
+            }
+        }
+
+        githubUserViewModel.githubUserList.observe(this) { githubUsers ->
+            if (githubUsers != null) {
+                adapter = GithubUserListAdapter(githubUsers)
+                binding.rvUserGithubList.adapter = adapter
+            }
+        }
+
+        githubUserViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+    }
+
+    private fun setRecyclerViewData() {
         val layoutManager = LinearLayoutManager(this)
         binding.rvUserGithubList.layoutManager = layoutManager
 
@@ -36,23 +57,6 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, searchView.text, Toast.LENGTH_SHORT).show()
                     false
                 }
-        }
-
-        githubUserViewModel.username.observe(this) {username ->
-            if (username.isNotBlank()){
-                githubUserViewModel.findGithubUser(username)
-            }
-        }
-
-        githubUserViewModel.githubUserList.observe(this) { githubUsers ->
-            if (githubUsers != null) {
-                adapter = GithubUserListAdapter(githubUsers)
-                binding.rvUserGithubList.adapter = adapter
-            }
-        }
-
-        githubUserViewModel.isLoading.observe(this) {
-            showLoading(it)
         }
     }
 
