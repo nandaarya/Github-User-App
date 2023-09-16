@@ -2,12 +2,12 @@ package com.example.github_user_app.ui.detail
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.github_user_app.R
 import com.example.github_user_app.databinding.ActivityDetailUserBinding
-import com.example.github_user_app.ui.follow.ViewPagerAdapter
-import com.example.github_user_app.ui.follow.FollowerFragment
-import com.example.github_user_app.ui.follow.FollowingFragment
+import com.example.github_user_app.ui.follow.*
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailUserActivity : AppCompatActivity() {
@@ -46,27 +46,20 @@ class DetailUserActivity : AppCompatActivity() {
     }
 
     private fun setViewPager() {
-        val followerBundle = Bundle()
-        followerBundle.putString("username", username)
-        followerBundle.putString("title", "Follower")
 
-        val followingBundle = Bundle()
-        followingBundle.putString("username", username)
-        followingBundle.putString("title", "Following")
-
-        val followerFragment = FollowerFragment()
-        followerFragment.arguments = followerBundle
-
-        val followingFragment = FollowingFragment()
-        followingFragment.arguments = followingBundle
-
-        val fragmentList = arrayListOf(followerFragment, followingFragment)
-
-        val adapter = ViewPagerAdapter(this, fragmentList)
+        val adapter = SectionsPagerAdapter(this, username)
         binding.viewPager.adapter = adapter
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = adapter.getPageTitle(position)
+            tab.text = TAB_TITLES[position].toString()
         }.attach()
+    }
+
+    companion object {
+        @StringRes
+        private val TAB_TITLES = intArrayOf(
+            R.string.tab_text_1,
+            R.string.tab_text_2
+        )
     }
 }
