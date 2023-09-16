@@ -7,7 +7,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="24dp"
@@ -19,21 +19,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/tab_layout"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_profile"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_launcher_foreground"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ImageContrastCheck" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -44,37 +43,46 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_profile">
 
             <TextView
-                android:id="@+id/tv_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="Username: " />
-
-            <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="Nama: " />
+                android:textAlignment="center"
+                style="@style/NormalBold"
+                android:text="@string/name" />
 
             <TextView
-                android:id="@+id/tv_total_followers"
+                android:id="@+id/tv_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="Followers: " />
+                android:textAlignment="center"
+                android:layout_marginBottom="16dp"
+                style="@style/Normal"
+                android:text="@string/username" />
 
-            <TextView
-                android:id="@+id/tv_total_following"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="Following: " />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/tv_total_followers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_weight="1"
+                    style="@style/Normal"
+                    android:text="@string/followers_template" />
+
+                <TextView
+                    android:id="@+id/tv_total_following"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_weight="1"
+                    style="@style/Normal"
+                    android:text="@string/following_template" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
         </LinearLayout>
 
         <com.google.android.material.tabs.TabLayout

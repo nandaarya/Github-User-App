@@ -44,8 +44,12 @@ class DetailUserActivity : AppCompatActivity() {
 
             binding.tvUsername.text = userDetail.login
             binding.tvName.text = userDetail.name
-            binding.tvTotalFollowers.text = userDetail.followers.toString()
-            binding.tvTotalFollowing.text = userDetail.following.toString()
+
+            val followersText = getString(R.string.followers_template, userDetail.followers.toString())
+            val followingText = getString(R.string.following_template, userDetail.following.toString())
+
+            binding.tvTotalFollowers.text = followersText
+            binding.tvTotalFollowing.text = followingText
         }
     }
 
@@ -60,7 +64,13 @@ class DetailUserActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        with(binding){
+            tvUsername.visibility = if (isLoading) View.GONE else View.VISIBLE
+            tvName.visibility = if (isLoading) View.GONE else View.VISIBLE
+            tvTotalFollowers.visibility = if (isLoading) View.GONE else View.VISIBLE
+            tvTotalFollowing.visibility = if (isLoading) View.GONE else View.VISIBLE
+            progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
     }
 
     companion object {
