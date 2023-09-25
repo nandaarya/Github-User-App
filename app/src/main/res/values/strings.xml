@@ -10,4 +10,5 @@
     <string name="name">Nama</string>
     <string name="username">Username</string>
     <string name="tab_desc">Tab Follower-Following</string>
+    <string name="favorite_desc">Favorite</string>
 </resources>
