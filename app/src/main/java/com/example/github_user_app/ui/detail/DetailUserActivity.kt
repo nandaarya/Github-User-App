@@ -27,7 +27,7 @@ class DetailUserActivity : AppCompatActivity() {
     }
 
     private fun setUserData() {
-        username = intent.getStringExtra("username")!!
+        username = intent.getStringExtra("username") ?: "DefaultUsername"
 
         githubUserDetailViewModel.isLoading.observe(this) {
             showLoading(it)

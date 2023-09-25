@@ -29,7 +29,7 @@ class FollowFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             position = it.getInt(ARG_POSITION)
-            username = it.getString(ARG_USERNAME)!!
+            username = it.getString(ARG_USERNAME) ?: "DefaultUsername"
         }
 
         val layoutManager = LinearLayoutManager(requireContext())
