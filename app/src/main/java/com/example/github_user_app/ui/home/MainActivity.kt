@@ -2,33 +2,46 @@ package com.example.github_user_app.ui.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.github_user_app.R
+import com.example.github_user_app.ViewModelFactory
+import com.example.github_user_app.data.Result
 import com.example.github_user_app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val githubUserViewModel by viewModels<GithubUserViewModel>()
     private lateinit var adapter: GithubUserListAdapter
+    private lateinit var githubUserViewModel: GithubUserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+        githubUserViewModel = ViewModelProvider(this, factory)[GithubUserViewModel::class.java]
+
         setRecyclerViewData()
 
-        githubUserViewModel.githubUserList.observe(this) { githubUsers ->
-            if (githubUsers != null) {
-                adapter = GithubUserListAdapter(githubUsers)
-                binding.rvUserGithubList.adapter = adapter
-            }
-        }
+        findGithubUserList(getString(R.string.first_query_github_username))
+    }
 
-        githubUserViewModel.isLoading.observe(this) {
-            showLoading(it)
+    private fun findGithubUserList(username: String) {
+        githubUserViewModel.setUsername(username).observe(this) {
+            when (it) {
+                is Result.Loading -> showLoading(true)
+                is Result.Error -> {
+                    showLoading(false)
+                }
+                is Result.Success -> {
+                    showLoading(false)
+                    adapter = GithubUserListAdapter(it.data)
+                    binding.rvUserGithubList.adapter = adapter
+                }
+            }
         }
     }
 
@@ -43,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                 .setOnEditorActionListener { _, _, _ ->
                     searchBar.text = searchView.text
                     searchView.hide()
-                    githubUserViewModel.setUsername(searchBar.text.toString())
+                    findGithubUserList(searchBar.text.toString())
                     false
                 }
         }

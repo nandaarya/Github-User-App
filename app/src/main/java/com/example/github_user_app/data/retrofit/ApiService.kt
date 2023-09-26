@@ -10,9 +10,9 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("search/users")
-    fun getGithubUser(
+    suspend fun getGithubUser(
         @Query("q") username: String
-    ): Call<GithubUserResponse>
+    ): GithubUserResponse
 
     @GET("users/{username}")
     fun getGithubUserDetail(
