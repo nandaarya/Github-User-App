@@ -5,7 +5,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.github_user_app.R
 import com.example.github_user_app.ViewModelFactory
 import com.example.github_user_app.data.Result
 import com.example.github_user_app.databinding.ActivityMainBinding
@@ -26,11 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         setRecyclerViewData()
 
-        findGithubUserList(getString(R.string.first_query_github_username))
-    }
-
-    private fun findGithubUserList(username: String) {
-        githubUserViewModel.setUsername(username).observe(this) {
+        githubUserViewModel.githubUserList.observe(this) {
             when (it) {
                 is Result.Loading -> showLoading(true)
                 is Result.Error -> {
@@ -45,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     private fun setRecyclerViewData() {
         val layoutManager = LinearLayoutManager(this)
         binding.rvUserGithubList.layoutManager = layoutManager
@@ -56,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                 .setOnEditorActionListener { _, _, _ ->
                     searchBar.text = searchView.text
                     searchView.hide()
-                    findGithubUserList(searchBar.text.toString())
+                    githubUserViewModel.setUsername(searchBar.text.toString())
                     false
                 }
         }
