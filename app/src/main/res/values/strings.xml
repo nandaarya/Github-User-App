@@ -16,7 +16,7 @@
     <string name="setting_title">Setting</string>
     <string name="favorite_title">Favorite</string>
     <string name="dark_mode">Dark Mode</string>
-    <string name="favorite_user_not_found">Favorite User Not Found</string>
+    <string name="favorite_user_not_found">Favorite User List is Empty</string>
     <string name="switch_off">OFF</string>
     <string name="switch_on">ON</string>
     <string name="favorite_user_not_found_2">Add Some Favorite User!</string>
