@@ -62,11 +62,12 @@ class Repository(
         favoriteUserDao.insert(favorite)
     }
 
-//    fun getAllChanges(): LiveData<List<FavoriteUser>> = favoriteUserDao.getAllChanges()
+    //    fun getAllChanges(): LiveData<List<FavoriteUser>> = favoriteUserDao.getAllChanges()
 //
 //    fun searchFav(name: String): LiveData<List<UserModel>> = mFavDao.searchFav(name)
 //
-    fun isFavorite(username: String): LiveData<Boolean> = favoriteUserDao.isFavorite(username)
+    fun isFavorite(username: String): LiveData<Boolean> =
+        favoriteUserDao.isFavorite(username)
 
     suspend fun delete(favorite: FavoriteUser) {
         favoriteUserDao.delete(favorite)

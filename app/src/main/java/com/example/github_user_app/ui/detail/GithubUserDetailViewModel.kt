@@ -8,6 +8,7 @@ import com.example.github_user_app.data.Repository
 import com.example.github_user_app.data.Result
 import com.example.github_user_app.data.local.FavoriteUser
 import com.example.github_user_app.data.response.DetailUserResponse
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class GithubUserDetailViewModel(private val repository: Repository) : ViewModel() {
@@ -33,6 +34,8 @@ class GithubUserDetailViewModel(private val repository: Repository) : ViewModel(
     }
 
     fun saveFavorite(favorite: FavoriteUser) =
-        viewModelScope.launch { repository.saveFavorite(favorite) }
+        viewModelScope.launch(Dispatchers.IO) { repository.saveFavorite(favorite) }
 
+    fun deleteFavorite(favorite: FavoriteUser) =
+        viewModelScope.launch(Dispatchers.IO) { repository.delete(favorite) }
 }

@@ -9,10 +9,10 @@ interface FavoriteUserDAO {
     suspend fun insert(favoriteUser: FavoriteUser)
 
     @Update
-    fun update(favoriteUser: FavoriteUser)
+    suspend fun update(favoriteUser: FavoriteUser)
 
     @Delete
-    fun delete(favoriteUser: FavoriteUser)
+    suspend fun delete(favoriteUser: FavoriteUser)
 
     @Query("SELECT * from FavoriteUser")
     fun getAllFavoriteUser(): LiveData<List<FavoriteUser>>

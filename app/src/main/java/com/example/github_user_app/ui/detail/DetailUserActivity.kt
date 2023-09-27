@@ -5,7 +5,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.github_user_app.R
 import com.example.github_user_app.ViewModelFactory
@@ -15,9 +14,6 @@ import com.example.github_user_app.data.response.DetailUserResponse
 import com.example.github_user_app.databinding.ActivityDetailUserBinding
 import com.example.github_user_app.ui.follow.SectionsPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class DetailUserActivity : AppCompatActivity() {
 
@@ -64,6 +60,10 @@ class DetailUserActivity : AppCompatActivity() {
                             R.drawable.baseline_favorite_24
                         )
                     )
+                    ivFavorite.setOnClickListener {
+                        val user = FavoriteUser(detailUser.login, detailUser.avatarUrl)
+                        githubUserDetailViewModel.deleteFavorite(user)
+                    }
                 }
                 false -> {
                     ivFavorite.setImageDrawable(
@@ -72,13 +72,12 @@ class DetailUserActivity : AppCompatActivity() {
                             R.drawable.baseline_favorite_border_24
                         )
                     )
+                    ivFavorite.setOnClickListener {
+                        val user = FavoriteUser(detailUser.login, detailUser.avatarUrl)
+                        githubUserDetailViewModel.saveFavorite(user)
+                    }
                 }
             }
-        }
-
-        ivFavorite.setOnClickListener {
-            val user = FavoriteUser(detailUser.login, detailUser.avatarUrl)
-            githubUserDetailViewModel.saveFavorite(user)
         }
 
         setViewPager()
