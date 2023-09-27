@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                 .setOnEditorActionListener { _, _, _ ->
                     searchBar.text = searchView.text
                     searchView.hide()
-                    githubUserViewModel.setUsername(searchBar.text.toString())
+                    githubUserViewModel.findGithubUser(searchBar.text.toString())
                     false
                 }
         }

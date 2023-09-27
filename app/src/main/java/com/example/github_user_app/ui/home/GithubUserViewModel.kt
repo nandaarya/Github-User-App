@@ -11,7 +11,7 @@ class GithubUserViewModel(private val repository: Repository) : ViewModel() {
     private val _githubUserList = MediatorLiveData<Result<List<ItemsItem>>>()
     val githubUserList: LiveData<Result<List<ItemsItem>>> = _githubUserList
 
-    fun setUsername(username: String) {
+    fun findGithubUser(username: String) {
         val liveData = repository.findGithubUser(username)
         _githubUserList.addSource(liveData) { result ->
             _githubUserList.value = result
@@ -19,6 +19,6 @@ class GithubUserViewModel(private val repository: Repository) : ViewModel() {
     }
 
     init {
-        setUsername("nandaarya")
+        findGithubUser("nandaarya")
     }
 }

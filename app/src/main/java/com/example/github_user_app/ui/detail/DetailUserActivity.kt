@@ -2,10 +2,13 @@ package com.example.github_user_app.ui.detail
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.github_user_app.R
+import com.example.github_user_app.ViewModelFactory
+import com.example.github_user_app.data.Result
+import com.example.github_user_app.data.response.DetailUserResponse
 import com.example.github_user_app.databinding.ActivityDetailUserBinding
 import com.example.github_user_app.ui.follow.SectionsPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
@@ -13,44 +16,49 @@ import com.google.android.material.tabs.TabLayoutMediator
 class DetailUserActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailUserBinding
-    private val githubUserDetailViewModel by viewModels<GithubUserDetailViewModel>()
     private lateinit var username: String
+    private lateinit var githubUserDetailViewModel: GithubUserDetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setUserData()
+        val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+        githubUserDetailViewModel = ViewModelProvider(this, factory)[GithubUserDetailViewModel::class.java]
+
+        username = intent.getStringExtra("username") ?: "DefaultUsername"
+
+        githubUserDetailViewModel.getGithubUserDetail(username)
+
+        githubUserDetailViewModel.githubUserDetail.observe(this) {
+            when (it) {
+                is Result.Loading -> showLoading(true)
+                is Result.Error -> {
+                    showLoading(false)
+                }
+                is Result.Success -> {
+                    showLoading(false)
+                    setUserData(it.data)
+                }
+            }
+        }
 
         setViewPager()
     }
 
-    private fun setUserData() {
-        username = intent.getStringExtra("username") ?: "DefaultUsername"
+    private fun setUserData(userDetail: DetailUserResponse) {
+        Glide
+            .with(this)
+            .load(userDetail.avatarUrl)
+            .fitCenter()
+            .into(binding.ivProfile)
 
-        githubUserDetailViewModel.isLoading.observe(this) {
-            showLoading(it)
-        }
+        binding.tvUsername.text = userDetail.login
+        binding.tvName.text = userDetail.name
 
-        githubUserDetailViewModel.getGithubUserDetail(username)
-
-        githubUserDetailViewModel.githubUserDetail.observe(this) { userDetail ->
-            Glide
-                .with(this)
-                .load(userDetail.avatarUrl)
-                .fitCenter()
-                .into(binding.ivProfile)
-
-            binding.tvUsername.text = userDetail.login
-            binding.tvName.text = userDetail.name
-
-            val followersText = getString(R.string.followers_template, userDetail.followers.toString())
-            val followingText = getString(R.string.following_template, userDetail.following.toString())
-
-            binding.tvTotalFollowers.text = followersText
-            binding.tvTotalFollowing.text = followingText
-        }
+        binding.tvTotalFollowers.text = getString(R.string.followers_template, userDetail.followers.toString())
+        binding.tvTotalFollowing.text = getString(R.string.following_template, userDetail.following.toString())
     }
 
     private fun setViewPager() {
