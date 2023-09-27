@@ -27,14 +27,18 @@ class FavoriteActivity : AppCompatActivity() {
 
         favoriteUserViewModel.favoriteUserList.observe(this) {
             showLoading(false)
-            if (it != null) {
+            if (!it.isNullOrEmpty()) {
                 val layoutManager = LinearLayoutManager(this)
                 binding.rvFavoriteUserList.layoutManager = layoutManager
                 adapter = GithubUserListAdapter(it)
                 binding.rvFavoriteUserList.adapter = adapter
             } else {
                 binding.rvFavoriteUserList.visibility = View.GONE
-                binding.tvFavoriteNotFound.visibility = View.VISIBLE
+                binding.layoutFavoriteNotFound.apply {
+                    ivNotFound.visibility = View.VISIBLE
+                    tvNotFound1.visibility = View.VISIBLE
+                    tvNotFound2.visibility = View.VISIBLE
+                }
             }
         }
     }

@@ -33,15 +33,14 @@
         android:visibility="gone"
         tools:visibility="visible" />
 
-    <TextView
-        android:id="@+id/tv_favorite_not_found"
-        style="@style/Big"
+    <include
+        android:id="@+id/layout_favorite_not_found"
+        layout="@layout/favorite_user_not_found"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/favorite_user_not_found"
-        android:textAlignment="center"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
