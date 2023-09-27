@@ -13,6 +13,7 @@ import com.example.github_user_app.data.Result
 import com.example.github_user_app.data.datastore.SettingPreferences
 import com.example.github_user_app.data.datastore.dataStore
 import com.example.github_user_app.databinding.ActivityMainBinding
+import com.example.github_user_app.ui.adapter.GithubUserListAdapter
 import com.example.github_user_app.ui.favorite.FavoriteActivity
 import com.example.github_user_app.ui.setting.SettingActivity
 import com.example.github_user_app.ui.setting.SettingViewModel

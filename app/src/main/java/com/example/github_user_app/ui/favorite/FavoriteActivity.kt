@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.github_user_app.util.ViewModelFactory
 import com.example.github_user_app.databinding.ActivityFavoriteBinding
-import com.example.github_user_app.ui.home.GithubUserListAdapter
+import com.example.github_user_app.ui.adapter.GithubUserListAdapter
 
 class FavoriteActivity : AppCompatActivity() {
 

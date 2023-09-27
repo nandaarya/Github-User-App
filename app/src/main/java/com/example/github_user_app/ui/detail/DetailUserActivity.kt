@@ -12,7 +12,7 @@ import com.example.github_user_app.data.Result
 import com.example.github_user_app.data.local.FavoriteUser
 import com.example.github_user_app.data.response.DetailUserResponse
 import com.example.github_user_app.databinding.ActivityDetailUserBinding
-import com.example.github_user_app.ui.follow.SectionsPagerAdapter
+import com.example.github_user_app.ui.adapter.SectionsPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailUserActivity : AppCompatActivity() {

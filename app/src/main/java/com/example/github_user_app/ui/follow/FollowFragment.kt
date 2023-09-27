@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.github_user_app.util.ViewModelFactory
 import com.example.github_user_app.data.Result
 import com.example.github_user_app.databinding.FragmentFollowBinding
-import com.example.github_user_app.ui.home.GithubUserListAdapter
+import com.example.github_user_app.ui.adapter.GithubUserListAdapter
 
 class FollowFragment : Fragment() {
 
