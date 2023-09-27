@@ -5,7 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.github_user_app.ViewModelFactory
+import com.example.github_user_app.util.ViewModelFactory
 import com.example.github_user_app.databinding.ActivityFavoriteBinding
 import com.example.github_user_app.ui.home.GithubUserListAdapter
 

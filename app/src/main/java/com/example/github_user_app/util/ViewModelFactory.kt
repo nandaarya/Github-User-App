@@ -1,4 +1,4 @@
-package com.example.github_user_app
+package com.example.github_user_app.util
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
@@ -26,7 +26,7 @@ class ViewModelFactory private constructor(private val repository: Repository): 
     companion object{
         @Volatile
         private var instance: ViewModelFactory? = null
-        fun getInstance(context: Context): ViewModelFactory = instance?: synchronized(this) {
+        fun getInstance(context: Context): ViewModelFactory = instance ?: synchronized(this) {
             instance ?: ViewModelFactory(Injection.provideRepository(context))
         }.also { instance = it }
     }

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.github_user_app.ViewModelFactory
+import com.example.github_user_app.util.ViewModelFactory
 import com.example.github_user_app.data.Result
 import com.example.github_user_app.databinding.FragmentFollowBinding
 import com.example.github_user_app.ui.home.GithubUserListAdapter

@@ -15,5 +15,6 @@
     <string name="favorite_user_title">Favorite User</string>
     <string name="setting_title">Setting</string>
     <string name="favorite_title">Favorite</string>
+    <string name="dark_mode">Dark Mode</string>
     <string name="favorite_user_not_found">Favorite User Not Found</string>
 </resources>

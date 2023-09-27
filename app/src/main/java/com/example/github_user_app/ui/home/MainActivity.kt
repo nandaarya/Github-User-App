@@ -4,13 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.github_user_app.R
-import com.example.github_user_app.ViewModelFactory
+import com.example.github_user_app.util.ViewModelFactory
 import com.example.github_user_app.data.Result
+import com.example.github_user_app.data.datastore.SettingPreferences
+import com.example.github_user_app.data.datastore.dataStore
 import com.example.github_user_app.databinding.ActivityMainBinding
 import com.example.github_user_app.ui.favorite.FavoriteActivity
+import com.example.github_user_app.ui.setting.SettingActivity
+import com.example.github_user_app.ui.setting.SettingViewModel
+import com.example.github_user_app.util.SettingViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +31,8 @@ class MainActivity : AppCompatActivity() {
 
         val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
         githubUserViewModel = ViewModelProvider(this, factory)[GithubUserViewModel::class.java]
+
+        setTheme()
 
         setRecyclerViewData()
 
@@ -45,16 +53,31 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setTheme() {
+        val pref = SettingPreferences.getInstance(application.dataStore)
+
+        val settingViewModel = ViewModelProvider(
+            this,
+            SettingViewModelFactory(pref)
+        )[SettingViewModel::class.java]
+
+        settingViewModel.getThemeSettings().observe(this) { isDarkModeActive: Boolean ->
+            if (isDarkModeActive) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
+    }
+
     private fun setOptionMenu() {
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-//                R.id.menu_option -> {
-//                    supportFragmentManager.beginTransaction()
-//                        .replace(R.id.fragment_container, MenuFragment())
-//                        .addToBackStack(null)
-//                        .commit()
-//                    true
-//                }
+                R.id.menu_option -> {
+                    val intent = Intent(this, SettingActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
                 R.id.menu_favorite -> {
                     val intent = Intent(this, FavoriteActivity::class.java)
                     startActivity(intent)

@@ -7,7 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.github_user_app.R
-import com.example.github_user_app.ViewModelFactory
+import com.example.github_user_app.util.ViewModelFactory
 import com.example.github_user_app.data.Result
 import com.example.github_user_app.data.local.FavoriteUser
 import com.example.github_user_app.data.response.DetailUserResponse
