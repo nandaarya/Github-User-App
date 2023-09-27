@@ -34,27 +34,29 @@ class Repository(
             }
         }
 
-    //
-//    fun followerUser(githubFollower: String): LiveData<Resource<List<FollowModel>>> = liveData {
-//        emit(Resource.Loading)
-//        try {
-//            val response = apiService.getFollowersUsers(githubFollower)
-//            emit(Resource.Success(response))
-//        } catch (e: Exception) {
-//            emit(Resource.Error(e.message.toString()))
-//        }
-//    }
-//
-//    fun followingUser(githubFollowing: String): LiveData<Resource<List<FollowModel>>> = liveData {
-//        emit(Resource.Loading)
-//        try {
-//            val response = apiService.getFollowingUsers(githubFollowing)
-//            emit(Resource.Success(response))
-//        } catch (e: Exception) {
-//            emit(Resource.Error(e.message.toString()))
-//        }
-//    }
-//
+
+    fun getFollowerUser(username: String): LiveData<Result<List<ItemsItem>>> =
+        liveData(Dispatchers.IO) {
+            emit(Result.Loading)
+            try {
+                val response = apiService.getFollowerList(username)
+                emit(Result.Success(response))
+            } catch (e: Exception) {
+                emit(Result.Error(e.message.toString()))
+            }
+        }
+
+    fun getFollowingUser(username: String): LiveData<Result<List<ItemsItem>>> =
+        liveData(Dispatchers.IO) {
+            emit(Result.Loading)
+            try {
+                val response = apiService.getFollowingList(username)
+                emit(Result.Success(response))
+            } catch (e: Exception) {
+                emit(Result.Error(e.message.toString()))
+            }
+        }
+
 //    suspend fun insert(favorite: UserModel) {
 //        mFavDao.insert(favorite)
 //    }

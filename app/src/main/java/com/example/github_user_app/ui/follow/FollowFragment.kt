@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.github_user_app.ViewModelFactory
+import com.example.github_user_app.data.Result
 import com.example.github_user_app.databinding.FragmentFollowBinding
 import com.example.github_user_app.ui.home.GithubUserListAdapter
 
@@ -14,6 +16,7 @@ class FollowFragment : Fragment() {
 
     private lateinit var binding: FragmentFollowBinding
     private lateinit var adapter: GithubUserListAdapter
+    private lateinit var userFollowViewModel: UserFollowViewModel
     private lateinit var username: String
     private var position: Int = 0
 
@@ -35,27 +38,42 @@ class FollowFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvFollowList.layoutManager = layoutManager
 
-        if (isAdded && !isDetached) {
-            val userFollowViewModel = ViewModelProvider(
-                this,
-                ViewModelProvider.NewInstanceFactory()
-            )[UserFollowViewModel::class.java]
+        val factory: ViewModelFactory = ViewModelFactory.getInstance(requireContext())
+        userFollowViewModel = ViewModelProvider(this, factory)[UserFollowViewModel::class.java]
 
-            userFollowViewModel.isLoading.observe(viewLifecycleOwner) {
-                showLoading(it)
-            }
-
-            userFollowViewModel.followList.observe(viewLifecycleOwner) { followList ->
-                if (followList != null) {
-                    adapter = GithubUserListAdapter(followList)
+        userFollowViewModel.followerList.observe(viewLifecycleOwner) {
+            when (it) {
+                is Result.Loading -> showLoading(true)
+                is Result.Error -> {
+                    showLoading(false)
+                }
+                is Result.Success -> {
+                    showLoading(false)
+                    adapter = GithubUserListAdapter(it.data)
                     binding.rvFollowList.adapter = adapter
                 }
             }
+        }
 
+        userFollowViewModel.followingList.observe(viewLifecycleOwner) {
+            when (it) {
+                is Result.Loading -> showLoading(true)
+                is Result.Error -> {
+                    showLoading(false)
+                }
+                is Result.Success -> {
+                    showLoading(false)
+                    adapter = GithubUserListAdapter(it.data)
+                    binding.rvFollowList.adapter = adapter
+                }
+            }
+        }
+
+        if (isAdded && !isDetached) {
             if (position == 1){
-                userFollowViewModel.getFollowList(username, "follower")
+                userFollowViewModel.getFollowerList(username)
             } else {
-                userFollowViewModel.getFollowList(username, "following")
+                userFollowViewModel.getFollowingList(username)
             }
         }
     }
