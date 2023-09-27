@@ -68,8 +68,6 @@ class Repository(
 
     fun getFavoriteUser(): LiveData<List<FavoriteUser>> = favoriteUserDao.getAllFavoriteUser()
 
-//    fun searchFav(name: String): LiveData<List<UserModel>> = mFavDao.searchFav(name)
-
     fun isFavorite(username: String): LiveData<Boolean> =
         favoriteUserDao.isFavorite(username)
 

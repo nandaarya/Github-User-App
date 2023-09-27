@@ -7,7 +7,6 @@ import com.example.github_user_app.data.Repository
 import com.example.github_user_app.di.Injection
 import com.example.github_user_app.ui.detail.GithubUserDetailViewModel
 import com.example.github_user_app.ui.favorite.FavoriteUserViewModel
-//import com.example.github_user_app.ui.favorite.FavoriteUserViewModel
 import com.example.github_user_app.ui.follow.UserFollowViewModel
 import com.example.github_user_app.ui.home.GithubUserViewModel
 
