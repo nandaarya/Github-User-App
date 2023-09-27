@@ -1,13 +1,16 @@
 package com.example.github_user_app.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.github_user_app.R
 import com.example.github_user_app.ViewModelFactory
 import com.example.github_user_app.data.Result
 import com.example.github_user_app.databinding.ActivityMainBinding
+import com.example.github_user_app.ui.favorite.FavoriteActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +28,8 @@ class MainActivity : AppCompatActivity() {
 
         setRecyclerViewData()
 
+        setOptionMenu()
+
         githubUserViewModel.githubUserList.observe(this) {
             when (it) {
                 is Result.Loading -> showLoading(true)
@@ -36,6 +41,26 @@ class MainActivity : AppCompatActivity() {
                     adapter = GithubUserListAdapter(it.data)
                     binding.rvUserGithubList.adapter = adapter
                 }
+            }
+        }
+    }
+
+    private fun setOptionMenu() {
+        binding.topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+//                R.id.menu_option -> {
+//                    supportFragmentManager.beginTransaction()
+//                        .replace(R.id.fragment_container, MenuFragment())
+//                        .addToBackStack(null)
+//                        .commit()
+//                    true
+//                }
+                R.id.menu_favorite -> {
+                    val intent = Intent(this, FavoriteActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
             }
         }
     }

@@ -13,4 +13,7 @@
     <string name="favorite_desc">Favorite</string>
     <string name="first_query_github_username">nandaarya</string>
     <string name="favorite_user_title">Favorite User</string>
+    <string name="setting_title">Setting</string>
+    <string name="favorite_title">Favorite</string>
+    <string name="favorite_user_not_found">Favorite User Not Found</string>
 </resources>
