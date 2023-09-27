@@ -12,4 +12,5 @@
     <string name="tab_desc">Tab Follower-Following</string>
     <string name="favorite_desc">Favorite</string>
     <string name="first_query_github_username">nandaarya</string>
+    <string name="favorite_user_title">Favorite User</string>
 </resources>

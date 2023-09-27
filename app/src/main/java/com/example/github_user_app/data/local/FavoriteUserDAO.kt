@@ -6,7 +6,7 @@ import androidx.room.*
 @Dao
 interface FavoriteUserDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(favoriteUser: FavoriteUser)
+    suspend fun insert(favoriteUser: FavoriteUser)
 
     @Update
     fun update(favoriteUser: FavoriteUser)
@@ -16,4 +16,7 @@ interface FavoriteUserDAO {
 
     @Query("SELECT * from FavoriteUser")
     fun getAllFavoriteUser(): LiveData<List<FavoriteUser>>
+
+    @Query("SELECT EXISTS(SELECT * FROM FavoriteUser WHERE FavoriteUser.username = :username)")
+    fun isFavorite(username: String): LiveData<Boolean>
 }

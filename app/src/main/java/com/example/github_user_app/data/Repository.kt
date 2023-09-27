@@ -2,6 +2,7 @@ package com.example.github_user_app.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.example.github_user_app.data.local.FavoriteUser
 import com.example.github_user_app.data.local.FavoriteUserDAO
 import com.example.github_user_app.data.response.DetailUserResponse
 import com.example.github_user_app.data.response.ItemsItem
@@ -57,20 +58,20 @@ class Repository(
             }
         }
 
-//    suspend fun insert(favorite: UserModel) {
-//        mFavDao.insert(favorite)
-//    }
-//
-//    fun getAllChanges(): LiveData<List<UserModel>> = mFavDao.getAllChanges()
+    suspend fun saveFavorite(favorite: FavoriteUser) {
+        favoriteUserDao.insert(favorite)
+    }
+
+//    fun getAllChanges(): LiveData<List<FavoriteUser>> = favoriteUserDao.getAllChanges()
 //
 //    fun searchFav(name: String): LiveData<List<UserModel>> = mFavDao.searchFav(name)
 //
-//    fun isFavorite(name: String): Boolean = mFavDao.isFavorite(name)
-//
-//    suspend fun delete(favorite: UserModel) {
-//        mFavDao.delete(favorite)
-//    }
-//
+    fun isFavorite(username: String): LiveData<Boolean> = favoriteUserDao.isFavorite(username)
+
+    suspend fun delete(favorite: FavoriteUser) {
+        favoriteUserDao.delete(favorite)
+    }
+
     companion object {
         @Volatile
         private var instance: Repository? = null

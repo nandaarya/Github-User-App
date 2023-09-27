@@ -3,21 +3,28 @@ package com.example.github_user_app.ui.detail
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.github_user_app.R
 import com.example.github_user_app.ViewModelFactory
 import com.example.github_user_app.data.Result
+import com.example.github_user_app.data.local.FavoriteUser
 import com.example.github_user_app.data.response.DetailUserResponse
 import com.example.github_user_app.databinding.ActivityDetailUserBinding
 import com.example.github_user_app.ui.follow.SectionsPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DetailUserActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailUserBinding
     private lateinit var username: String
     private lateinit var githubUserDetailViewModel: GithubUserDetailViewModel
+    private lateinit var detailUser: DetailUserResponse
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +32,8 @@ class DetailUserActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
-        githubUserDetailViewModel = ViewModelProvider(this, factory)[GithubUserDetailViewModel::class.java]
+        githubUserDetailViewModel =
+            ViewModelProvider(this, factory)[GithubUserDetailViewModel::class.java]
 
         username = intent.getStringExtra("username") ?: "DefaultUsername"
 
@@ -40,8 +48,37 @@ class DetailUserActivity : AppCompatActivity() {
                 is Result.Success -> {
                     showLoading(false)
                     setUserData(it.data)
+                    detailUser = it.data
                 }
             }
+        }
+
+        val ivFavorite = binding.ivFavorite
+        githubUserDetailViewModel.isFavorite(username)
+        githubUserDetailViewModel.isFavorite.observe(this) {
+            when (it) {
+                true -> {
+                    ivFavorite.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            ivFavorite.context,
+                            R.drawable.baseline_favorite_24
+                        )
+                    )
+                }
+                false -> {
+                    ivFavorite.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            ivFavorite.context,
+                            R.drawable.baseline_favorite_border_24
+                        )
+                    )
+                }
+            }
+        }
+
+        ivFavorite.setOnClickListener {
+            val user = FavoriteUser(detailUser.login, detailUser.avatarUrl)
+            githubUserDetailViewModel.saveFavorite(user)
         }
 
         setViewPager()
@@ -57,8 +94,10 @@ class DetailUserActivity : AppCompatActivity() {
         binding.tvUsername.text = userDetail.login
         binding.tvName.text = userDetail.name
 
-        binding.tvTotalFollowers.text = getString(R.string.followers_template, userDetail.followers.toString())
-        binding.tvTotalFollowing.text = getString(R.string.following_template, userDetail.following.toString())
+        binding.tvTotalFollowers.text =
+            getString(R.string.followers_template, userDetail.followers.toString())
+        binding.tvTotalFollowing.text =
+            getString(R.string.following_template, userDetail.following.toString())
     }
 
     private fun setViewPager() {
@@ -72,7 +111,7 @@ class DetailUserActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        with(binding){
+        with(binding) {
             tvUsername.visibility = if (isLoading) View.GONE else View.VISIBLE
             tvName.visibility = if (isLoading) View.GONE else View.VISIBLE
             tvTotalFollowers.visibility = if (isLoading) View.GONE else View.VISIBLE
