@@ -1,5 +1,6 @@
 package com.example.github_user_app.ui.detail
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -49,6 +50,34 @@ class DetailUserActivity : AppCompatActivity() {
             }
         }
 
+        setShare()
+
+        setFavorite()
+
+        setViewPager()
+    }
+
+    private fun setShare() {
+        binding.btnShare.setOnClickListener{
+            val username = detailUser.login
+            val name = detailUser.name
+            val follower = detailUser.followers
+            val following = detailUser.following
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "Detail User Github \n" +
+                        "Username: $username \n" +
+                        "Nama: $name \n" +
+                        "Jumlah Follower: $follower \n" +
+                        "Jumlah Following: $following" )
+                type = "text/plain"
+            }
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+        }
+    }
+
+    private fun setFavorite() {
         val ivFavorite = binding.ivFavorite
         githubUserDetailViewModel.isFavorite(username)
         githubUserDetailViewModel.isFavorite.observe(this) {
@@ -79,8 +108,6 @@ class DetailUserActivity : AppCompatActivity() {
                 }
             }
         }
-
-        setViewPager()
     }
 
     private fun setUserData(userDetail: DetailUserResponse) {
