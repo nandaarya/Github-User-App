@@ -14,7 +14,8 @@ import com.example.github_user_app.ui.adapter.GithubUserListAdapter
 
 class FollowFragment : Fragment() {
 
-    private lateinit var binding: FragmentFollowBinding
+    private var _binding: FragmentFollowBinding? = null
+    private val binding get() = _binding!!
     private lateinit var adapter: GithubUserListAdapter
     private lateinit var userFollowViewModel: UserFollowViewModel
     private lateinit var username: String
@@ -24,7 +25,7 @@ class FollowFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentFollowBinding.inflate(inflater, container, false)
+        _binding = FragmentFollowBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -78,6 +79,11 @@ class FollowFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun showLoading(isLoading: Boolean) {
         binding.rvFollowList.visibility = if (isLoading) View.GONE else View.VISIBLE
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
@@ -86,5 +92,14 @@ class FollowFragment : Fragment() {
     companion object {
         var ARG_USERNAME: String = ""
         var ARG_POSITION = "section_number"
+
+        @JvmStatic
+        fun newInstance(username: String, index: Int) =
+            FollowFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_USERNAME, username)
+                    putInt(ARG_POSITION, index)
+                }
+            }
     }
 }
