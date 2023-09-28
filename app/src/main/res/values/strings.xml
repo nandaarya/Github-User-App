@@ -20,4 +20,6 @@
     <string name="switch_off">OFF</string>
     <string name="switch_on">ON</string>
     <string name="favorite_user_not_found_2">Add Some Favorite User!</string>
+    <string name="github_logo">Github Logo</string>
+    <string name="splashscreen_title">Github User List</string>
 </resources>
