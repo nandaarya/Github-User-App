@@ -21,8 +21,9 @@
             android:id="@+id/searchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/searchbar_hint">
-        </com.google.android.material.search.SearchBar>
+            android:contentDescription="@string/search_bar"
+            android:hint="@string/searchbar_hint"
+            tools:ignore="ContentDescription"></com.google.android.material.search.SearchBar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.search.SearchView

@@ -55,7 +55,8 @@
             android:minWidth="48dp"
             app:icon="@drawable/baseline_share_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RedundantDescriptionCheck" />
 
         <TextView
             android:id="@+id/tv_name"
